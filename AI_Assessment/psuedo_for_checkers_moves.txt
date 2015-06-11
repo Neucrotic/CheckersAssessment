@@ -1,0 +1,80 @@
+GET VALID MOVES
+Piece Types can be
+	BLANK
+	WHITE
+	RED,
+	WHITE_KING,
+	RED_KING,
+
+list of moves = GetValidMove(x, y)
+	set ourPieceType to GetPieceAt(x, y)
+	if ourPieceType is equal to BLANK then
+		return empty list;
+	end
+	
+	set offset1 to equal Dimentions - 1
+	set offset2 to equal Dimentions + 1
+	if(ourPieceType == WHITE || ourPieceType == WHITE_KING)
+		set offset1 to offset1 * -1;
+		set offset2 to offset2 * -1;
+	end
+	
+	set index to GetIndexFromPosition(x, y)
+	
+	set possibleSquare1 to equal index + offset1;
+	set possibleSquare2 to equal index + offset2;
+	
+	add possibleSquare1 to possibleMoveList if is valid move
+	add possibleSquare2 to possibleMoveList if is valid move
+
+	if(ourPieceType is either king)
+		set offset1 to offset1 * -1;
+		set offset2 to offset2 * -1;
+		set possibleSquare1 to equal index + offset1;
+		set possibleSquare2 to equal index + offset2;
+		
+		add possibleSquare1 to possibleMoveList is valid move
+		add possibleSquare2 to possibleMoveList is valid move
+	end
+	
+	posisbleMovelIst will be from 0-4 in length
+	for each move in possible move list
+		set posY to equal move divided by Dimentions
+		set posX to equal move modulo by Dimentions
+		add {pos X, posY} to move list
+	end
+	END
+
+
+
+	
+	if(possibleSquare1 is valid AND possibleSquare1 is BLANK)
+		set posY to equal possibleSquare1 divided by Dimentions
+		set posX to equal possibleSquare1 modulo by Dimentions
+		add {pos X, posY} to move list
+	end
+	if(possibleSquare2 is valid AND possibleSquare2 is BLANK)
+		set posY to equal possibleSquare2 divided by Dimentions
+		set posX to equal possibleSquare2 modulo by Dimentions
+		add {pos X, posY} to move list
+	end
+	
+	if(ourPieceType == WHITE_KING || ourPieceType == RED_KING)
+		set offset1 to offset1 * -1;
+		set offset2 to offset2 * -1;
+		set possibleSquare1 to equal index + offset1;
+		set possibleSquare2 to equal index + offset2;
+		
+		if(possibleSquare1 is valid AND possibleSquare1 is BLANK)
+			set posY to equal possibleSquare1 divided by Dimentions
+			set posX to equal possibleSquare1 modulo by Dimentions
+			add {pos X, posY} to move list
+		end
+		if(possibleSquare2 is valid AND possibleSquare2 is BLANK)
+			set posY to equal possibleSquare1 divided by Dimentions
+			set posX to equal possibleSquare1 modulo by Dimentions
+			add {pos X, posY} to move list
+		end
+	end
+	
+end
