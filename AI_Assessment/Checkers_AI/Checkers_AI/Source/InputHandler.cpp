@@ -1,8 +1,11 @@
+#include <typeinfo>
 #include <iostream>
 #include "InputHandler.h"
 
 InputHandler::InputHandler(GLFWwindow* _window, Board* _board)
 {
+	moveMade = false;
+
 	selector = 0;
 	selectorXZ = glm::vec2(0, 0);
 	selectorColour = glm::vec4(0, 0, 1, 1);
@@ -41,7 +44,7 @@ InputHandler::InputHandler(GLFWwindow* _window, Board* _board)
 	}
 
 	keyCD = 0.15f;
-	enterCount = 0;
+	secondEnter = false;
 }
 
 InputHandler::~InputHandler()
@@ -51,6 +54,8 @@ InputHandler::~InputHandler()
 
 void InputHandler::Update(double _dt)
 {
+
+#pragma region Keys_Input
 	if (glfwGetKey(myWindow, GLFW_KEY_UP) == GLFW_PRESS && keyCD <= 0)
 	{
 		if (IsSelectorInColumn(topRow))
@@ -118,16 +123,108 @@ void InputHandler::Update(double _dt)
 	if (glfwGetKey(myWindow, GLFW_KEY_ENTER) == GLFW_PRESS && keyCD <= 0)
 	{
 		OnEnter();
-		
-		enterCount++;
 
 		keyCD = 0.15f;
 	}
+#pragma endregion
 
 	keyCD -= _dt;
-	std::cout << "Key Cooldown: " << keyCD << std::endl;
-	std::cout << "Selector: " << selector << std::endl;
-	std::cout << "Selector Co-ord: " << selectorXZ.x << selectorXZ.y << std::endl;
+
+	if (secondEnter)
+	{
+		std::cout << "true" << std::endl;
+
+		if (myBoard->GetPieceFromIndex(selector) != SquareType::EMPTY)
+		{
+			selectorColour = glm::vec4(0, 1, 0, 1);
+		}
+	}	
+	else
+	{
+		selectorColour = glm::vec4(0, 0, 1, 1);
+
+		std::cout << "false" << std::endl;
+	}
+		
+}
+
+bool InputHandler::IsIndexInColumn(uint* _columns, uint _index)
+{
+	for (int i = 0; i < BOARD_LENGTH; i++)
+	{
+		if (_index == _columns[i])
+		{
+			return true;
+		}
+	}
+
+	return false;
+}
+
+void InputHandler::OnEnter()
+{
+	if (!secondEnter)
+	{
+		selectedPiece = myBoard->GetPieceFromIndex(selector);
+
+		if (selectedPiece != SquareType::EMPTY || selectedPiece != SquareType::WHITE_KING || selectedPiece != SquareType::WHITE_PIECE)
+		{
+			selectedPosition = myBoard->GetPositionFromIndex(selector);
+
+			myValidMoves = myBoard->GetValidMoves(selectedPosition.x, selectedPosition.y);
+
+			secondEnter = true;
+			return;
+		}
+	}
+	
+	if (selectedPiece == SquareType::EMPTY)
+	{
+		secondEnter = false;
+		return;
+	}
+
+	if (secondEnter)
+	{
+		if (myValidMoves.size() > 0 && typeid(selectedPiece) == typeid(SquareType))
+		{
+			OnSecondEnter(selectedPiece, selectedPosition);
+		}
+
+		secondEnter = false;
+	}
+}
+
+void InputHandler::OnSecondEnter(SquareType _type, glm::vec2 _oldPos)
+{
+	SquareType piece;
+	glm::vec2 position;
+
+	for (auto i = 0; i < myValidMoves.size(); i++)
+	{
+		piece = myBoard->GetPieceFromIndex(selector);
+
+		if (piece == SquareType::EMPTY)
+		{
+			position = myBoard->GetPositionFromIndex(selector);
+
+			//making sure the move is in the validMoves list
+			if (position.x == myValidMoves[i].X && position.y == myValidMoves[i].Y)
+			{
+				myBoard->SetPiece(myValidMoves[i].X, myValidMoves[i].Y, _type);
+				myBoard->SetPiece(_oldPos.x, _oldPos.y, SquareType::EMPTY);
+
+				if (myValidMoves[i].jumpedIndex != -1)
+				{
+					glm::vec2 pos = myBoard->GetPositionFromIndex(myValidMoves[i].jumpedIndex);
+					
+					myBoard->SetPiece(pos.x, pos.y, SquareType::EMPTY);
+				}
+
+				moveMade = true;
+			}
+		}
+	}
 }
 
 bool InputHandler::IsSelectorInColumn(uint* _columns)
@@ -141,53 +238,4 @@ bool InputHandler::IsSelectorInColumn(uint* _columns)
 	}
 
 	return false;
-}
-
-void InputHandler::OnEnter()
-{
-	SquareType piece;
-	uint* position;
-	std::vector<Move> myValidMoves;
-
-	if (enterCount < 1)
-	{
-		//error is that the variables are in local scope
-		piece = myBoard->GetPieceFromIndex(selector);
-
-		if (piece != SquareType::EMPTY || piece != SquareType::WHITE_KING || piece != SquareType::WHITE_PIECE)
-		{
-			position = myBoard->GetPositionFromIndex(selector);
-
-			myValidMoves = myBoard->GetValidMoves(position[POS_X], position[POS_Y]);
-		}
-	}
-	else
-	{
-		OnSecondEnter(piece, position, myValidMoves);
-
-		enterCount = 0;
-	}
-}
-
-void InputHandler::OnSecondEnter(SquareType _piece, uint* _position, std::vector<Move> _moveList)
-{
-	SquareType piece = _piece;
-	uint* position = _position;
-	std::vector<Move> myValidMoves = _moveList;
-
-	for (auto i = 0; i < myValidMoves.size(); i++)
-	{
-		piece = myBoard->GetPieceFromIndex(selector);
-
-		if (piece == SquareType::EMPTY)
-		{
-			position = myBoard->GetPositionFromIndex(selector);
-
-			//making sure the move is in the validMoves list
-			if (position[POS_X] == myValidMoves[i].X && position[POS_Y] == myValidMoves[i].Y)
-			{
-				myBoard->SetPiece(myValidMoves[i].X, myValidMoves[i].Y, piece);
-			}
-		}
-	}
 }

@@ -23,18 +23,18 @@ Board::Board()
 	SetPiece(6, 2, SquareType::RED_PIECE);
 
 	//setting white pieces
-	SetPiece(0, 5, SquareType::WHITE_PIECE);
-	SetPiece(2, 5, SquareType::WHITE_PIECE);
-	SetPiece(4, 5, SquareType::WHITE_PIECE);
-	SetPiece(6, 5, SquareType::WHITE_PIECE);
-	SetPiece(1, 6, SquareType::WHITE_PIECE);
-	SetPiece(3, 6, SquareType::WHITE_PIECE);
-	SetPiece(5, 6, SquareType::WHITE_PIECE);
-	SetPiece(7, 6, SquareType::WHITE_PIECE);
-	SetPiece(0, 7, SquareType::WHITE_PIECE);
-	SetPiece(2, 7, SquareType::WHITE_PIECE);
-	SetPiece(4, 7, SquareType::WHITE_PIECE);
-	SetPiece(6, 7, SquareType::WHITE_PIECE);
+	SetPiece(1, 5, SquareType::WHITE_PIECE);
+	SetPiece(3, 5, SquareType::WHITE_PIECE);
+	SetPiece(5, 5, SquareType::WHITE_PIECE);
+	SetPiece(7, 5, SquareType::WHITE_PIECE);
+	SetPiece(0, 6, SquareType::WHITE_PIECE);
+	SetPiece(2, 6, SquareType::WHITE_PIECE);
+	SetPiece(4, 6, SquareType::WHITE_PIECE);
+	SetPiece(6, 6, SquareType::WHITE_PIECE);
+	SetPiece(1, 7, SquareType::WHITE_PIECE);
+	SetPiece(3, 7, SquareType::WHITE_PIECE);
+	SetPiece(5, 7, SquareType::WHITE_PIECE);
+	SetPiece(7, 7, SquareType::WHITE_PIECE);
 }
 
 Board::~Board()
@@ -72,89 +72,269 @@ SquareType Board::GetPieceFromIndex(uint _index)
 	return piece;
 }
 
+glm::vec2 Board::GetPositionFromIndex(uint _index)
+{
+	glm::vec2 pos;
+
+	pos.x = _index % BOARD_LENGTH;
+	pos.y = _index / BOARD_LENGTH;
+
+	return pos;
+}
+
+SquareType Board::GetOpponentsType(SquareType _myType)
+{
+	SquareType returnType;
+
+	if (_myType == SquareType::RED_PIECE)
+	{
+		returnType = SquareType::WHITE_PIECE;
+	}
+	else if (_myType == SquareType::RED_KING)
+	{
+		returnType = SquareType::WHITE_KING;
+	}
+	else if (_myType == SquareType::WHITE_PIECE)
+	{
+		returnType = SquareType::RED_PIECE;
+	}
+	else if (_myType == SquareType::WHITE_KING)
+	{
+		returnType = SquareType::RED_KING;
+	}
+	else if (_myType == SquareType::EMPTY)
+	{
+		returnType = SquareType::EMPTY;
+	}
+
+	return returnType;
+}
+
+SquareType Board::GetOtherOpponentType(SquareType _opponentsType)
+{
+	if (_opponentsType == SquareType::RED_KING)
+	{
+		return SquareType::RED_PIECE;
+	}
+	if (_opponentsType == SquareType::RED_PIECE)
+	{
+		return SquareType::RED_KING;
+	}
+	if (_opponentsType == SquareType::WHITE_KING)
+	{
+		return SquareType::WHITE_PIECE;
+	}
+	if (_opponentsType == SquareType::WHITE_PIECE)
+	{
+		return SquareType::WHITE_KING;
+	}
+}
+
 std::vector<Move> Board::GetValidMoves(uint _x, uint _y)
 {
 	std::vector<Move> validMoves;
-	std::vector<int> possibleMoves;
 	SquareType myPieceType = GetPieceAt(_x, _y);
+	SquareType opponentsType = GetOpponentsType(myPieceType);
+	
 
 	if (myPieceType == SquareType::EMPTY)
 	{
 		return validMoves;
 	}
+
+	if (GetPossibleJumpsFromPos(glm::vec2(_x, _y)).size() > 0)
+	{
+		validMoves = GetPossibleJumpsFromPos(glm::vec2(_x, _y));
+	}
 	else
 	{
-		//assign offsets for our piece
-		int offset1 = BOARD_LENGTH + 1;
-		int offset2 = BOARD_LENGTH - 1;
+		validMoves = GetPossibleMovesFromPos(glm::vec2(_x, _y));
+	}
 
-		//if checking for a white side peice, invert the offsets
-		if (myPieceType == SquareType::WHITE_PIECE || myPieceType == SquareType::WHITE_KING)
-		{
-			offset1 *= -1;
-			offset2 *= -1;
-		}
+	return validMoves;
+}
 
-		int index = GetIndexAtPosition(_x, _y);
-		int possibleSquareA = index + offset1;
-		int possibleSquareB = index + offset2;
+std::vector<Move> Board::GetPossibleMovesFromPos(glm::vec2 _pos)
+{
+	std::vector<Move> moveList;
 
-		//if possible squares are valid moves add them to list
+	SquareType myPiece = GetPieceAt(_pos.x, _pos.y);
+
+	//assign offsets for our piece
+	int offset1 = BOARD_LENGTH + 1;
+	int offset2 = BOARD_LENGTH - 1;
+
+	//if checking for a white side peice, invert the offsets
+	if (myPiece == SquareType::WHITE_PIECE || myPiece == SquareType::WHITE_KING)
+	{
+		offset1 *= -1;
+		offset2 *= -1;
+	}
+
+	//setting the index of the squares we could possibly move to
+	int index = GetIndexAtPosition(_pos.x, _pos.y);
+	int possibleSquareA = index + offset1;
+	int possibleSquareB = index + offset2;
+
+	if (GetPieceFromIndex(possibleSquareA) == SquareType::EMPTY)
+	{
+		glm::vec2 newPos = GetPositionFromIndex(possibleSquareA);
+		Move move;
+		move.X = newPos.x;
+		move.Y = newPos.y;
+		move.jumpedIndex = -1;
+
+		moveList.push_back(move);
+	}
+	if (GetPieceFromIndex(possibleSquareB) == SquareType::EMPTY)
+	{
+		glm::vec2 newPos = GetPositionFromIndex(possibleSquareB);
+		Move move;
+		move.X = newPos.x;
+		move.Y = newPos.y;
+		move.jumpedIndex = -1;
+
+		moveList.push_back(move);
+	}
+
+	//checking if our piece is a king, if so, do futher checks
+	if (myPiece == SquareType::RED_KING || myPiece == SquareType::WHITE_KING)
+	{
+		//invert the offsets
+		offset1 *= -1;
+		offset2 *= -1;
+
+		possibleSquareA = index + offset1;
+		possibleSquareB = index + offset2;
+
 		if (GetPieceFromIndex(possibleSquareA) == SquareType::EMPTY)
 		{
-			possibleMoves.push_back(possibleSquareA);
+			glm::vec2 newPos = GetPositionFromIndex(possibleSquareA);
+			Move move;
+			move.X = newPos.x;
+			move.Y = newPos.y;
+			move.jumpedIndex = -1;
+
+			moveList.push_back(move);
 		}
 		if (GetPieceFromIndex(possibleSquareB) == SquareType::EMPTY)
 		{
-			possibleMoves.push_back(possibleSquareB);
-		}
-
-		//check backwards moves if king
-		if (myPieceType == SquareType::RED_KING || myPieceType == SquareType::WHITE_KING)
-		{
-			offset1 *= -1;
-			offset2 *= -1;
-
-			possibleSquareA = index + offset1;
-			possibleSquareB = index + offset2;
-
-			if (GetPieceFromIndex(possibleSquareA) == SquareType::EMPTY)
-			{
-				possibleMoves.push_back(possibleSquareA);
-			}
-			if (GetPieceFromIndex(possibleSquareB) == SquareType::EMPTY)
-			{
-				possibleMoves.push_back(possibleSquareB);
-			}
-		}
-
-		for (auto i = possibleMoves.begin(); i != possibleMoves.end(); i++)
-		{
-			uint* index = GetPositionFromIndex(*i);
-			//int posX = *i % BOARD_LENGTH;
-			//int posY = *i / BOARD_LENGTH;
-
+			glm::vec2 newPos = GetPositionFromIndex(possibleSquareB);
 			Move move;
-			move.X = index[0];
-			move.Y = index[1];
-			move.isJump = false;
+			move.X = newPos.x;
+			move.Y = newPos.y;
+			move.jumpedIndex = -1;
 
-			validMoves.push_back(move);
+			moveList.push_back(move);
 		}
-
-		return validMoves;
 	}
+
+	return moveList;
 }
 
-uint* Board::GetPositionFromIndex(uint _index)
+std::vector<Move> Board::GetPossibleJumpsFromPos(glm::vec2 _pos)
 {
-	uint index[2];
+	std::vector<Move> moveList;
+	SquareType myPiece = GetPieceAt(_pos.x, _pos.y);
+	SquareType opponentsPiece = GetOpponentsType(myPiece);
 
-	int posX = _index % BOARD_LENGTH;
-	int posY = _index / BOARD_LENGTH;
+	//assign offsets for our piece
+	int offset1 = BOARD_LENGTH + 1;
+	int offset2 = BOARD_LENGTH - 1;
 
-	index[0] = posX;
-	index[1] = posY;
+	//if checking for a white side peice, invert the offsets
+	if (myPiece == SquareType::WHITE_PIECE || myPiece == SquareType::WHITE_KING)
+	{
+		offset1 *= -1;
+		offset2 *= -1;
+	}
 
-	return index;
+	//setting the index of the squares we could possibly move to
+	int index = GetIndexAtPosition(_pos.x, _pos.y);
+	int possibleSquareA = index + offset1;
+	int possibleSquareB = index + offset2;
+
+	if (GetPieceFromIndex(possibleSquareA) == opponentsPiece || GetPieceFromIndex(possibleSquareA) == GetOtherOpponentType(opponentsPiece))
+	{
+		int jumpedPiece = possibleSquareA;
+
+		//double our offsets and resetting our possible squares
+		offset1 *= 2;
+		offset2 *= 2;
+		possibleSquareA = index + offset1;
+
+		if (GetPieceFromIndex(possibleSquareA) == SquareType::EMPTY)
+		{
+			glm::vec2 newPos = GetPositionFromIndex(possibleSquareA);
+			Move move;
+			move.X = newPos.x;
+			move.Y = newPos.y;
+			move.jumpedIndex = jumpedPiece;
+
+			moveList.push_back(move);
+		}
+
+		//ressetting offset for possible calculations
+		offset1 /= 2;
+		offset2 /= 2;
+
+	}
+	if (GetPieceFromIndex(possibleSquareB) == opponentsPiece || GetPieceFromIndex(possibleSquareB) == GetOtherOpponentType(opponentsPiece))
+	{
+		int jumpedPiece = possibleSquareB;
+
+		//double our offsets and resetting our possible squares
+		offset1 *= 2;
+		offset2 *= 2;
+		possibleSquareB = index + offset2;
+
+		if (GetPieceFromIndex(possibleSquareB) == SquareType::EMPTY)
+		{
+			glm::vec2 newPos = GetPositionFromIndex(possibleSquareB);
+			Move move;
+			move.X = newPos.x;
+			move.Y = newPos.y;
+			move.jumpedIndex = jumpedPiece;
+		
+			moveList.push_back(move);
+		}
+
+		//ressetting offset for possible calculations
+		offset1 /= 2;
+		offset2 /= 2;
+	}
+
+	//checking if our piece is a king, if so, do futher checks
+	if (myPiece == SquareType::RED_KING || myPiece == SquareType::WHITE_KING)
+	{
+		//invert the offsets
+		offset1 *= -1;
+		offset2 *= -1;
+
+		possibleSquareA = index + offset1;
+		possibleSquareB = index + offset2;
+
+		if (GetPieceFromIndex(possibleSquareA) == SquareType::EMPTY)
+		{
+			glm::vec2 newPos = GetPositionFromIndex(possibleSquareA);
+			Move move;
+			move.X = newPos.x;
+			move.Y = newPos.y;
+			move.jumpedIndex = false;
+
+			moveList.push_back(move);
+		}
+		if (GetPieceFromIndex(possibleSquareB) == SquareType::EMPTY)
+		{
+			glm::vec2 newPos = GetPositionFromIndex(possibleSquareB);
+			Move move;
+			move.X = newPos.x;
+			move.Y = newPos.y;
+			move.jumpedIndex = false;
+
+			moveList.push_back(move);
+		}
+	}
+	
+	return moveList;
 }

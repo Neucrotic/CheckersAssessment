@@ -8,7 +8,7 @@ void Game::Startup()
 	MobileCamera* camera = new MobileCamera();
 	camera->SetInputWindow(window);
 	camera->SetupPerspective(glm::pi<float>() * 0.25f, 16.0f / 9.0f, 0.1f, 10000.0f);
-	camera->LookAt(glm::vec3(5, 10, 0), glm::vec3(0, 0, 0), glm::vec3(0, 1, 0));
+	camera->LookAt(glm::vec3(4, 9, -4), glm::vec3(4, 0, 4), glm::vec3(0, 1, 0));
 	m_camera = camera;	
 
 	gameBoard = new Board();
@@ -30,11 +30,17 @@ bool Game::Update(double _dt)
 	if (playersTurn)
 	{
 		inputHandler->Update(_dt);
+		if (inputHandler->moveMade != false)
+		{
+			
+		}
 	}
 	else
 	{
 
 	}
+
+	UpgradePieces();
 
 	//here to test function
 	gameBoard->GetValidMoves(4, 7);
@@ -100,11 +106,44 @@ void Game::RenderBoard(Board* _board)
 				case SquareType::WHITE_PIECE:
 					Gizmos::addCylinderFilled(glm::vec3(j, 0, i), 0.5f, 0.3f, 10, glm::vec4(1, 1, 1, 1), nullptr);
 					break;
+				case SquareType::RED_KING:
+					Gizmos::addCylinderFilled(glm::vec3(j, 0, i), 0.5f, 0.3f, 5, glm::vec4(1, 0, 0, 1), nullptr);
+					break;
+				case SquareType::WHITE_KING:
+					Gizmos::addCylinderFilled(glm::vec3(j, 0, i), 0.5f, 0.3f, 5, glm::vec4(1, 1, 1, 1), nullptr);
+					break;
 				default:
 					break;
 				}
 				layoutIter++;
 			}			
+		}
+	}
+}
+
+void Game::UpgradePieces()
+{
+	for (int i = 0; i < BOARD_SIZE; i++)
+	{
+		uint* top;
+		uint* bot;
+
+		top = inputHandler->GetTopRow();
+		bot = inputHandler->GetBottomRow();
+
+		if (inputHandler->IsIndexInColumn(top, i))
+		{
+			if (gameBoard->layout[i] == SquareType::RED_PIECE)
+			{
+				gameBoard->layout[i] = SquareType::RED_KING;
+			}
+		}
+		else if (inputHandler->IsIndexInColumn(bot, i))
+		{
+			if (gameBoard->layout[i] == SquareType::WHITE_PIECE)
+			{
+				gameBoard->layout[i] = SquareType::WHITE_KING;
+			}
 		}
 	}
 }
