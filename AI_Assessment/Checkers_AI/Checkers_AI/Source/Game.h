@@ -22,5 +22,4 @@ private:
 	InputHandler* inputHandler;
 
 	void RenderBoard(Board* _board);
-	void UpgradePieces();
 };

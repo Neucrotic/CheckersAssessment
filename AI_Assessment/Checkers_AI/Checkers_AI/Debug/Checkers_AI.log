@@ -1,19 +1,34 @@
-﻿Build started 17/06/2015 4:52:19 PM.
-     1>Project "E:\CheckersAssessment\AI_Assessment\Checkers_AI\Checkers_AI\Checkers_AI.vcxproj" on node 2 (Build target(s)).
+﻿Build started 18/06/2015 4:09:19 PM.
+     1>Project "C:\Users\TEMP\Documents\CheckersAssessment\AI_Assessment\Checkers_AI\Checkers_AI\Checkers_AI.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /IE:\CheckersAssessment\AI_Assessment\Checkers_AI\Checkers_AI\Dep\glfw\include\ /IE:\CheckersAssessment\AI_Assessment\Checkers_AI\Checkers_AI\Dep\glm\ /ZI /nologo /W3 /WX- /Od /Oy- /D GLM_SWIZZLE /D GLM_FORCE_PURE /D WIN32 /D _DEBUG /D _CONSOLE /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Source\InputHandler.cpp
-         InputHandler.cpp
-     1>e:\checkersassessment\ai_assessment\checkers_ai\checkers_ai\source\inputhandler.cpp(52): warning C4150: deletion of pointer to incomplete type 'GLFWwindow'; no destructor called
-                 e:\checkersassessment\ai_assessment\checkers_ai\checkers_ai\dep\glfw\include\glfw\glfw3.h(757) : see declaration of 'GLFWwindow'
-     1>e:\checkersassessment\ai_assessment\checkers_ai\checkers_ai\source\inputhandler.cpp(131): warning C4244: '-=' : conversion from 'double' to 'float', possible loss of data
-     1>e:\checkersassessment\ai_assessment\checkers_ai\checkers_ai\source\inputhandler.cpp(174): warning C4244: 'argument' : conversion from 'float' to 'uint', possible loss of data
-     1>e:\checkersassessment\ai_assessment\checkers_ai\checkers_ai\source\inputhandler.cpp(203): warning C4018: '<' : signed/unsigned mismatch
-     1>e:\checkersassessment\ai_assessment\checkers_ai\checkers_ai\source\inputhandler.cpp(215): warning C4244: 'argument' : conversion from 'float' to 'uint', possible loss of data
-     1>e:\checkersassessment\ai_assessment\checkers_ai\checkers_ai\source\inputhandler.cpp(221): warning C4244: 'argument' : conversion from 'float' to 'uint', possible loss of data
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /IE:\CheckersAssessment\AI_Assessment\Checkers_AI\Checkers_AI\Dep\glfw\include\ /IE:\CheckersAssessment\AI_Assessment\Checkers_AI\Checkers_AI\Dep\glm\ /ZI /nologo /W3 /WX- /Od /Oy- /D GLM_SWIZZLE /D GLM_FORCE_PURE /D WIN32 /D _DEBUG /D _CONSOLE /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TC /analyze- /errorReport:prompt Source\gl_core_4_4.c
-         gl_core_4_4.c
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /IC:\Users\TEMP\Documents\CheckersAssessment\AI_Assessment\Checkers_AI\Checkers_AI\Dep\glfw\include\ /IC:\Users\TEMP\Documents\CheckersAssessment\AI_Assessment\Checkers_AI\Checkers_AI\Dep\glm\ /ZI /nologo /W3 /WX- /Od /Oy- /D GLM_SWIZZLE /D GLM_FORCE_PURE /D WIN32 /D _DEBUG /D _CONSOLE /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Source\Board.cpp
+         Board.cpp
+     1>c:\users\temp\documents\checkersassessment\ai_assessment\checkers_ai\checkers_ai\source\board.cpp(111): warning C4244: '=' : conversion from 'uint' to 'float', possible loss of data
+     1>c:\users\temp\documents\checkersassessment\ai_assessment\checkers_ai\checkers_ai\source\board.cpp(112): warning C4244: '=' : conversion from 'uint' to 'float', possible loss of data
+     1>c:\users\temp\documents\checkersassessment\ai_assessment\checkers_ai\checkers_ai\source\board.cpp(193): warning C4244: 'argument' : conversion from 'float' to 'uint', possible loss of data
+     1>c:\users\temp\documents\checkersassessment\ai_assessment\checkers_ai\checkers_ai\source\board.cpp(207): warning C4244: 'argument' : conversion from 'float' to 'uint', possible loss of data
+     1>c:\users\temp\documents\checkersassessment\ai_assessment\checkers_ai\checkers_ai\source\board.cpp(239): warning C4244: '=' : conversion from 'float' to 'uint32_t', possible loss of data
+     1>c:\users\temp\documents\checkersassessment\ai_assessment\checkers_ai\checkers_ai\source\board.cpp(240): warning C4244: '=' : conversion from 'float' to 'uint32_t', possible loss of data
+     1>c:\users\temp\documents\checkersassessment\ai_assessment\checkers_ai\checkers_ai\source\board.cpp(249): warning C4244: '=' : conversion from 'float' to 'uint32_t', possible loss of data
+     1>c:\users\temp\documents\checkersassessment\ai_assessment\checkers_ai\checkers_ai\source\board.cpp(250): warning C4244: '=' : conversion from 'float' to 'uint32_t', possible loss of data
+     1>c:\users\temp\documents\checkersassessment\ai_assessment\checkers_ai\checkers_ai\source\board.cpp(294): warning C4244: '=' : conversion from 'float' to 'uint32_t', possible loss of data
+     1>c:\users\temp\documents\checkersassessment\ai_assessment\checkers_ai\checkers_ai\source\board.cpp(295): warning C4244: '=' : conversion from 'float' to 'uint32_t', possible loss of data
+     1>c:\users\temp\documents\checkersassessment\ai_assessment\checkers_ai\checkers_ai\source\board.cpp(304): warning C4244: '=' : conversion from 'float' to 'uint32_t', possible loss of data
+     1>c:\users\temp\documents\checkersassessment\ai_assessment\checkers_ai\checkers_ai\source\board.cpp(305): warning C4244: '=' : conversion from 'float' to 'uint32_t', possible loss of data
+     1>c:\users\temp\documents\checkersassessment\ai_assessment\checkers_ai\checkers_ai\source\board.cpp(318): warning C4244: 'argument' : conversion from 'float' to 'uint', possible loss of data
+     1>c:\users\temp\documents\checkersassessment\ai_assessment\checkers_ai\checkers_ai\source\board.cpp(333): warning C4244: 'argument' : conversion from 'float' to 'uint', possible loss of data
+     1>c:\users\temp\documents\checkersassessment\ai_assessment\checkers_ai\checkers_ai\source\board.cpp(350): warning C4244: '=' : conversion from 'float' to 'uint32_t', possible loss of data
+     1>c:\users\temp\documents\checkersassessment\ai_assessment\checkers_ai\checkers_ai\source\board.cpp(351): warning C4244: '=' : conversion from 'float' to 'uint32_t', possible loss of data
+     1>c:\users\temp\documents\checkersassessment\ai_assessment\checkers_ai\checkers_ai\source\board.cpp(375): warning C4244: '=' : conversion from 'float' to 'uint32_t', possible loss of data
+     1>c:\users\temp\documents\checkersassessment\ai_assessment\checkers_ai\checkers_ai\source\board.cpp(376): warning C4244: '=' : conversion from 'float' to 'uint32_t', possible loss of data
+     1>c:\users\temp\documents\checkersassessment\ai_assessment\checkers_ai\checkers_ai\source\board.cpp(401): warning C4244: '=' : conversion from 'float' to 'uint32_t', possible loss of data
+     1>c:\users\temp\documents\checkersassessment\ai_assessment\checkers_ai\checkers_ai\source\board.cpp(402): warning C4244: '=' : conversion from 'float' to 'uint32_t', possible loss of data
+     1>c:\users\temp\documents\checkersassessment\ai_assessment\checkers_ai\checkers_ai\source\board.cpp(411): warning C4244: '=' : conversion from 'float' to 'uint32_t', possible loss of data
+     1>c:\users\temp\documents\checkersassessment\ai_assessment\checkers_ai\checkers_ai\source\board.cpp(412): warning C4244: '=' : conversion from 'float' to 'uint32_t', possible loss of data
+     1>c:\users\temp\documents\checkersassessment\ai_assessment\checkers_ai\checkers_ai\source\board.cpp(437): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\temp\documents\checkersassessment\ai_assessment\checkers_ai\checkers_ai\source\board.cpp(163): warning C4715: 'Board::GetOtherOpponentType' : not all control paths return a value
        Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"E:\CheckersAssessment\AI_Assessment\Checkers_AI\Debug\Checkers_AI.exe" /INCREMENTAL /NOLOGO /LIBPATH:"E:\CheckersAssessment\AI_Assessment\Checkers_AI\Checkers_AI\Dep\glfw\lib-vc2013\\" opengl32.lib glfw3.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"E:\CheckersAssessment\AI_Assessment\Checkers_AI\Debug\Checkers_AI.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"E:\CheckersAssessment\AI_Assessment\Checkers_AI\Debug\Checkers_AI.lib" /MACHINE:X86 Debug\App.obj
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\TEMP\Documents\CheckersAssessment\AI_Assessment\Checkers_AI\Debug\Checkers_AI.exe" /INCREMENTAL /NOLOGO /LIBPATH:"C:\Users\TEMP\Documents\CheckersAssessment\AI_Assessment\Checkers_AI\Checkers_AI\Dep\glfw\lib-vc2013\\" opengl32.lib glfw3.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\TEMP\Documents\CheckersAssessment\AI_Assessment\Checkers_AI\Debug\Checkers_AI.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\TEMP\Documents\CheckersAssessment\AI_Assessment\Checkers_AI\Debug\Checkers_AI.lib" /MACHINE:X86 Debug\App.obj
          Debug\Board.obj
          Debug\Camera.obj
          Debug\MobileCamera.obj
@@ -22,9 +37,9 @@
          Debug\gl_core_4_4.obj
          Debug\InputHandler.obj
          Debug\main.obj
-         Checkers_AI.vcxproj -> E:\CheckersAssessment\AI_Assessment\Checkers_AI\Debug\Checkers_AI.exe
-     1>Done Building Project "E:\CheckersAssessment\AI_Assessment\Checkers_AI\Checkers_AI\Checkers_AI.vcxproj" (Build target(s)).
+         Checkers_AI.vcxproj -> C:\Users\TEMP\Documents\CheckersAssessment\AI_Assessment\Checkers_AI\Debug\Checkers_AI.exe
+     1>Done Building Project "C:\Users\TEMP\Documents\CheckersAssessment\AI_Assessment\Checkers_AI\Checkers_AI\Checkers_AI.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:02.42
+Time Elapsed 00:00:00.63

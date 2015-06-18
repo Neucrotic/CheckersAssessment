@@ -79,6 +79,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Source\Agent.cpp" />
     <ClCompile Include="Source\App.cpp" />
     <ClCompile Include="Source\Board.cpp" />
     <ClCompile Include="Source\Camera\Camera.cpp" />
@@ -90,6 +91,7 @@
     <ClCompile Include="Source\main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\Agent.h" />
     <ClInclude Include="Source\App.h" />
     <ClInclude Include="Source\Board.h" />
     <ClInclude Include="Source\Camera\Camera.h" />

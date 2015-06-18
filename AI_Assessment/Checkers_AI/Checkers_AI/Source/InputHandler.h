@@ -18,17 +18,6 @@ public:
 
 	void Update(double _dt);
 
-	inline uint* GetTopRow()
-	{
-		return &topRow[0];
-	}
-	inline uint* GetBottomRow()
-	{
-		return &bottomRow[0];
-	}
-
-	bool IsIndexInColumn(uint* _columns, uint _index);
-
 private:
 
 	GLFWwindow* myWindow;
@@ -39,11 +28,6 @@ private:
 	uint selector;
 	SquareType selectedPiece;
 	glm::vec2 selectedPosition;
-
-	uint rightColumn[BOARD_LENGTH];
-	uint leftColumn[BOARD_LENGTH];
-	uint topRow[BOARD_LENGTH];
-	uint bottomRow[BOARD_LENGTH];
 
 	float keyCD;
 	bool secondEnter;

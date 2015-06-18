@@ -5,11 +5,16 @@ class Agent
 {
 public:
 
-	Agent(int _difficulty);
+	Agent(uint _difficulty);
 	~Agent(){}
+
+	void Update(double _dt);
 
 private:
 
-	Move ChooseMoves(std::vector<Move> _validMoves);
+	uint difficulty;
 
+	Move ChooseMoves(std::vector<Move> _validMoves, Board* _board);
+	void MakeMove(Move _move, Board* _board);
+	bool PlayGame(Board* _board);
 };

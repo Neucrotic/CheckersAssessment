@@ -24,16 +24,35 @@ struct Move
 	uint32_t X;
 	uint32_t Y;
 	int jumpedIndex;
+	int oldIndex;
 };
 
 class Board
 {
 public:
 
-	SquareType layout[BOARD_SIZE];
-
 	Board();
 	~Board();
+
+	SquareType layout[BOARD_SIZE];
+
+	uint rightColumn[BOARD_LENGTH];
+	uint leftColumn[BOARD_LENGTH];
+	uint topRow[BOARD_LENGTH];
+	uint bottomRow[BOARD_LENGTH];
+
+	bool gameOver;
+	uint numRed;
+	uint numWhite;
+
+	inline uint* GetTopRow()
+	{
+		return &topRow[0];
+	}
+	inline uint* GetBottomRow()
+	{
+		return &bottomRow[0];
+	}
 
 	void SetPiece(uint _x, uint _y, SquareType _eType);
 	SquareType GetPieceAt(uint _x, uint _y);
@@ -47,4 +66,12 @@ public:
 	std::vector<Move> GetValidMoves(uint _x, uint _y);
 	std::vector<Move> GetPossibleMovesFromPos(glm::vec2 _pos);
 	std::vector<Move> GetPossibleJumpsFromPos(glm::vec2 _pos);
+	std::vector<Move> GetAllPossibleMoves();
+
+	Board* Clone();
+
+	bool IsIndexInColumn(uint* _columns, uint _index);
+
+	void UpgradePieces();
+	void CountPieces();
 };

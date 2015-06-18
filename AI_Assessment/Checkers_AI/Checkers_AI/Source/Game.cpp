@@ -1,3 +1,4 @@
+#include <iostream>
 #include "Game.h"
 #include "Camera\MobileCamera.h"
 #include "Board.h"
@@ -12,10 +13,12 @@ void Game::Startup()
 	m_camera = camera;	
 
 	gameBoard = new Board();
+	Board* pTest = gameBoard->Clone();
 
 	inputHandler = new InputHandler(window, gameBoard);
 
 	playersTurn = true;
+	gameOver = false;
 }
 
 void Game::Shutdown()
@@ -29,6 +32,8 @@ bool Game::Update(double _dt)
 
 	if (playersTurn)
 	{
+
+		gameBoard->GetAllPossibleMoves();
 		inputHandler->Update(_dt);
 		if (inputHandler->moveMade != false)
 		{
@@ -40,10 +45,19 @@ bool Game::Update(double _dt)
 
 	}
 
-	UpgradePieces();
+	gameBoard->CountPieces();
+	if (gameBoard->numRed <= 0)
+	{
+		gameBoard->gameOver = true;
+		std::cout << "Player Wins" << std::endl;
+	}
+	else if (gameBoard->numWhite <= 0)
+	{
+		gameBoard->gameOver = true;
+		std::cout << "Computer Wins" << std::endl;
+	}
 
-	//here to test function
-	gameBoard->GetValidMoves(4, 7);
+	gameBoard->UpgradePieces();
 
 	return true;
 }
@@ -57,20 +71,6 @@ void Game::Render()
 
 	//rendering the peice selector
 	Gizmos::addSphere(glm::vec3(inputHandler->selectorXZ.x, 1.0f, inputHandler->selectorXZ.y), 0.5f, 5, 5, glm::vec4(inputHandler->selectorColour), nullptr);
-
-	/*glm::vec4 white(1);
-	glm::vec4 black(0, 0, 0, 1);
-
-	for (int i = 0; i < 21; ++i)
-	{
-		Gizmos::addLine(glm::vec3(-10 + i, 0, 10),
-			glm::vec3(-10 + i, 0, -10),
-			i == 10 ? white : black);
-
-		Gizmos::addLine(glm::vec3(10, 0, -10 + i),
-			glm::vec3(-10, 0, -10 + i),
-			i == 10 ? white : black);
-	}*/
 }
 
 void Game::RenderBoard(Board* _board)
@@ -117,33 +117,6 @@ void Game::RenderBoard(Board* _board)
 				}
 				layoutIter++;
 			}			
-		}
-	}
-}
-
-void Game::UpgradePieces()
-{
-	for (int i = 0; i < BOARD_SIZE; i++)
-	{
-		uint* top;
-		uint* bot;
-
-		top = inputHandler->GetTopRow();
-		bot = inputHandler->GetBottomRow();
-
-		if (inputHandler->IsIndexInColumn(top, i))
-		{
-			if (gameBoard->layout[i] == SquareType::RED_PIECE)
-			{
-				gameBoard->layout[i] = SquareType::RED_KING;
-			}
-		}
-		else if (inputHandler->IsIndexInColumn(bot, i))
-		{
-			if (gameBoard->layout[i] == SquareType::WHITE_PIECE)
-			{
-				gameBoard->layout[i] = SquareType::WHITE_KING;
-			}
 		}
 	}
 }

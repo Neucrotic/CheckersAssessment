@@ -13,36 +13,6 @@ InputHandler::InputHandler(GLFWwindow* _window, Board* _board)
 	myWindow = _window;
 	myBoard = _board;
 
-	//setting column arrays
-	uint index = 0;
-	for (int l = 0; l < 8; l++)
-	{
-		leftColumn[l] = index;
-
-		index += 8;
-	}
-	index = 7;
-	for (int r = 0; r < 8; r++)
-	{
-		rightColumn[r] = index;
-
-		index += 8;
-	}
-	index = 56;
-	for (int t = 0; t < 8; t++)
-	{
-		topRow[t] = index;
-
-		index++;
-	}
-	index = 0;
-	for (int b = 0; b < 8; b++)
-	{
-		bottomRow[b] = index;
-
-		index++;
-	}
-
 	keyCD = 0.15f;
 	secondEnter = false;
 }
@@ -58,7 +28,7 @@ void InputHandler::Update(double _dt)
 #pragma region Keys_Input
 	if (glfwGetKey(myWindow, GLFW_KEY_UP) == GLFW_PRESS && keyCD <= 0)
 	{
-		if (IsSelectorInColumn(topRow))
+		if (IsSelectorInColumn(myBoard->topRow))
 		{
 			selector -= 56;
 			selectorXZ = glm::vec2(selectorXZ.x, selectorXZ.y - 7);
@@ -74,7 +44,7 @@ void InputHandler::Update(double _dt)
 
 	if (glfwGetKey(myWindow, GLFW_KEY_DOWN) == GLFW_PRESS && keyCD <= 0)
 	{
-		if (IsSelectorInColumn(bottomRow))
+		if (IsSelectorInColumn(myBoard->bottomRow))
 		{
 			selector += 56;
 			selectorXZ = glm::vec2(selectorXZ.x, selectorXZ.y + 7);
@@ -90,7 +60,7 @@ void InputHandler::Update(double _dt)
 
 	if (glfwGetKey(myWindow, GLFW_KEY_RIGHT) == GLFW_PRESS && keyCD <= 0)
 	{
-		if (IsSelectorInColumn(leftColumn))
+		if (IsSelectorInColumn(myBoard->rightColumn))
 		{
 			selector += 7;
 			selectorXZ = glm::vec2(selectorXZ.x + 7, selectorXZ.y);
@@ -106,7 +76,7 @@ void InputHandler::Update(double _dt)
 
 	if (glfwGetKey(myWindow, GLFW_KEY_LEFT) == GLFW_PRESS && keyCD <= 0)
 	{
-		if (IsSelectorInColumn(rightColumn))
+		if (IsSelectorInColumn(myBoard->leftColumn))
 		{
 			selector -= 7;
 			selectorXZ = glm::vec2(selectorXZ.x - 7, selectorXZ.y);
@@ -145,20 +115,6 @@ void InputHandler::Update(double _dt)
 
 		std::cout << "false" << std::endl;
 	}
-		
-}
-
-bool InputHandler::IsIndexInColumn(uint* _columns, uint _index)
-{
-	for (int i = 0; i < BOARD_LENGTH; i++)
-	{
-		if (_index == _columns[i])
-		{
-			return true;
-		}
-	}
-
-	return false;
 }
 
 void InputHandler::OnEnter()
