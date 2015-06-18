@@ -62,6 +62,8 @@ public:
 
 	SquareType GetOpponentsType(SquareType _myType);
 	SquareType GetOtherOpponentType(SquareType _opponentType);
+	uint GetRandomWhitePiece();
+	uint GetRandomRedPiece();
 
 	std::vector<Move> GetValidMoves(uint _x, uint _y);
 	std::vector<Move> GetPossibleMovesFromPos(glm::vec2 _pos);

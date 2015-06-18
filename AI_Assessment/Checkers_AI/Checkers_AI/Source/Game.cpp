@@ -18,7 +18,6 @@ void Game::Startup()
 	inputHandler = new InputHandler(window, gameBoard);
 
 	playersTurn = true;
-	gameOver = false;
 }
 
 void Game::Shutdown()

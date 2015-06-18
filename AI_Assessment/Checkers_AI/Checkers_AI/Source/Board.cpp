@@ -67,6 +67,8 @@ Board::Board()
 	}
 #pragma endregion
 
+
+	gameOver = false;
 }
 
 Board::~Board()
@@ -162,6 +164,44 @@ SquareType Board::GetOtherOpponentType(SquareType _opponentsType)
 	}
 
 	return SquareType::EMPTY;
+}
+
+uint Board::GetRandomWhitePiece()
+{
+	bool condition = false;
+	uint pieceIndex;
+
+	while (!condition)
+	{
+		uint randNum = rand() % BOARD_SIZE;
+
+		if (GetPieceFromIndex(randNum) == SquareType::WHITE_KING || GetPieceFromIndex(randNum) == SquareType::WHITE_PIECE)
+		{
+			pieceIndex = randNum;
+			condition = true;
+		}
+	}
+
+	return pieceIndex;
+}
+
+uint Board::GetRandomRedPiece()
+{
+	bool condition = false;
+	uint pieceIndex;
+
+	while (!condition)
+	{
+		uint randNum = rand() % BOARD_SIZE;
+
+		if (GetPieceFromIndex(randNum) == SquareType::RED_KING || GetPieceFromIndex(randNum) == SquareType::RED_PIECE)
+		{
+			pieceIndex = randNum;
+			condition = true;
+		}
+	}
+
+	return pieceIndex;
 }
 
 std::vector<Move> Board::GetValidMoves(uint _x, uint _y)
@@ -457,7 +497,7 @@ std::vector<Move> Board::GetAllPossibleMoves()
 
 Board* Board::Clone()
 {
-	Board* clone;
+	Board* clone = new Board();
 
 	size_t layoutSize = sizeof(this->layout);
 	memcpy(clone->layout, this->layout, layoutSize);
