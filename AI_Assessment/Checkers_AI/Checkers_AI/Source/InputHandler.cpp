@@ -24,6 +24,7 @@ InputHandler::~InputHandler()
 
 void InputHandler::Update(double _dt)
 {
+	moveMade = false;
 
 #pragma region Keys_Input
 	if (glfwGetKey(myWindow, GLFW_KEY_UP) == GLFW_PRESS && keyCD <= 0)
@@ -119,6 +120,11 @@ void InputHandler::Update(double _dt)
 
 void InputHandler::OnEnter()
 {
+	if (jumpMade)
+	{
+		OnSecondEnter(selectedPiece, selectedPosition);
+	}
+
 	if (!secondEnter)
 	{
 		selectedPiece = myBoard->GetPieceFromIndex(selector);
@@ -153,6 +159,7 @@ void InputHandler::OnEnter()
 
 void InputHandler::OnSecondEnter(SquareType _type, glm::vec2 _oldPos)
 {
+	jumpMade = false;
 	SquareType piece;
 	glm::vec2 position;
 
@@ -169,12 +176,16 @@ void InputHandler::OnSecondEnter(SquareType _type, glm::vec2 _oldPos)
 			{
 				myBoard->SetPiece(myValidMoves[i].X, myValidMoves[i].Y, _type);
 				myBoard->SetPiece(_oldPos.x, _oldPos.y, SquareType::EMPTY);
+				movedPiecePos.x = myValidMoves[i].X;
+				movedPiecePos.y = myValidMoves[i].Y;
 
 				if (myValidMoves[i].jumpedIndex != -1)
 				{
 					glm::vec2 pos = myBoard->GetPositionFromIndex(myValidMoves[i].jumpedIndex);
 					
 					myBoard->SetPiece(pos.x, pos.y, SquareType::EMPTY);
+
+					jumpMade = true;
 				}
 
 				moveMade = true;

@@ -12,6 +12,8 @@ public:
 	~InputHandler();
 
 	bool moveMade;
+	bool jumpMade;
+	glm::ivec2 movedPiecePos;
 
 	glm::vec2 selectorXZ;
 	glm::vec4 selectorColour;

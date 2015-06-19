@@ -3,6 +3,7 @@
 #include "Camera\MobileCamera.h"
 #include "Board.h"
 #include "InputHandler.h"
+#include "Agent.h"
 
 void Game::Startup()
 {
@@ -16,6 +17,7 @@ void Game::Startup()
 	Board* pTest = gameBoard->Clone();
 
 	inputHandler = new InputHandler(window, gameBoard);
+	aiAgent = new Agent(10, gameBoard);
 
 	playersTurn = true;
 }
@@ -31,17 +33,30 @@ bool Game::Update(double _dt)
 
 	if (playersTurn)
 	{
-
-		gameBoard->GetAllPossibleMoves();
+		//gameBoard->GetAllPossibleMoves();
 		inputHandler->Update(_dt);
 		if (inputHandler->moveMade != false)
 		{
-			
+			if (inputHandler->jumpMade == false)
+			{
+				playersTurn = false;
+			}
+			else
+			{
+				std::vector<Move> moves;
+				moves = gameBoard->GetPossibleJumpsFromPos(inputHandler->movedPiecePos);
+
+				if (moves.size() <= 0)
+				{
+					playersTurn = false;
+				}
+			}
 		}
 	}
 	else
 	{
-
+		aiAgent->PlayTurn(_dt);
+		playersTurn = true;
 	}
 
 	gameBoard->CountPieces();

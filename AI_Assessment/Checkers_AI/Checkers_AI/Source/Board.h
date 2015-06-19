@@ -1,5 +1,6 @@
 #pragma once
 #include <vector>
+//#include <string>
 #include "glm\common.hpp"
 
 typedef unsigned int uint;
@@ -69,10 +70,13 @@ public:
 	std::vector<Move> GetPossibleMovesFromPos(glm::vec2 _pos);
 	std::vector<Move> GetPossibleJumpsFromPos(glm::vec2 _pos);
 	std::vector<Move> GetAllPossibleMoves();
+	std::vector<Move> GetAllPossibleWhiteMoves();
 
 	Board* Clone();
 
 	bool IsIndexInColumn(uint* _columns, uint _index);
+	bool IsInBounds(glm::vec2 _pos);
+		//above 0 less than 8
 
 	void UpgradePieces();
 	void CountPieces();

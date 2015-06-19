@@ -1,4 +1,5 @@
 #include <thread>
+#include <iostream>
 #include "Agent.h"
 
 Agent::Agent(uint _difficulty, Board* _boardToPlayOn)
@@ -27,6 +28,12 @@ void Agent::MakeMove(Move _move, Board* _board)
 
 	glm::ivec2 pos = _board->GetPositionFromIndex(_move.oldIndex);
 	_board->SetPiece(pos.x, pos.y, SquareType::EMPTY);
+
+	if (_move.jumpedIndex != -1)
+	{
+		glm::ivec2 posJ = _board->GetPositionFromIndex(_move.jumpedIndex);
+		_board->SetPiece(posJ.x, posJ.y, SquareType::EMPTY);
+	}
 }
 
 bool Agent::PlayGame(Board* _board)
@@ -39,79 +46,131 @@ bool Agent::PlayGame(Board* _board)
 	return true;
 }
 
-uint Agent::RunBranch(Move _move)
+void Agent::PlayTurn(double _dt)
 {
-	uint score;
+	std::vector<Move> myMoves;
+	std::vector<uint> moveScores;
+	std::vector<Move> bestMoves;
+	uint bestIndex = 0;
+
+	myMoves = realBoard->GetAllPossibleWhiteMoves();
+
+	for (int j = 0; j < myMoves.size(); j++)
+	{
+		moveScores.push_back(RunBranch(myMoves[j], _dt));
+		bestMoves.push_back(myMoves[j]);
+	}
+
+	for (int s = 0; s < moveScores.size(); s++)
+	{
+		if (moveScores[bestIndex] < moveScores[s])
+		{
+			bestIndex = s;
+		}
+	}
+
+	MakeMove(bestMoves[bestIndex], realBoard);
+}
+
+uint Agent::RunBranch(Move _move, double _dt)
+{
+	uint score = 0;
+	float timer = 1;
 
 	Board* clone = realBoard->Clone();
 
 	MakeMove(_move, clone);
 	bool myTurn = false;
 
-	while (!clone->gameOver)
+	for (int d = 0; d < difficulty; d++)
 	{
-		uint randNumX = rand() % BOARD_LENGTH;
-		uint randNumY = rand() % BOARD_LENGTH;
-
-		clone->CountPieces();
-		if (clone->numRed <= 0)
+		while (!clone->gameOver)
 		{
-			clone->gameOver = true;
-		}
-		else if (clone->numWhite <= 0)
-		{
-			clone->gameOver = true;
-			score++;
-		}
-		clone->UpgradePieces();
+			uint randNumX = rand() % BOARD_LENGTH;
+			uint randNumY = rand() % BOARD_LENGTH;
 
-		if (myTurn)
-		{
-			uint index = clone->GetRandomWhitePiece();
-			glm::ivec2 pos = clone->GetPositionFromIndex(index);
-			std::vector<Move> optionalMoves;
-
-			optionalMoves = clone->GetValidMoves(pos.x, pos.y);
-			uint someNum = rand() % 7;
-
-			for (int i = 0; i < someNum; i++)
+			clone->CountPieces();
+			if (clone->numRed <= 0)
 			{
-				if (i == someNum)
-				{
-					Move myMove;
-					myMove.X = optionalMoves[i].X;
-					myMove.Y = optionalMoves[i].Y;
-					myMove.jumpedIndex = optionalMoves[i].jumpedIndex;
-					myMove.oldIndex = optionalMoves[i].oldIndex;
+				clone->gameOver = true;
+			}
+			else if (clone->numWhite <= 0)
+			{
+				clone->gameOver = true;
+				score++;
+			}
+			clone->UpgradePieces();
 
-					MakeMove(myMove, clone);
-					myTurn = false;
+			if (myTurn)
+			{
+				std::cout << "AI TURN" << std::endl;
+				uint index = clone->GetRandomWhitePiece();
+				glm::ivec2 pos = clone->GetPositionFromIndex(index);
+				std::vector<Move> optionalMoves;
+
+				optionalMoves = clone->GetValidMoves(pos.x, pos.y);
+
+				if (optionalMoves.size() > 0)
+				{
+					int someNum = rand() % optionalMoves.size();
+
+					for (int i = -1; i < someNum + 1; i++)
+					{
+						if (i == someNum)
+						{
+							Move myMove;
+							myMove.X = optionalMoves[i].X;
+							myMove.Y = optionalMoves[i].Y;
+							myMove.jumpedIndex = optionalMoves[i].jumpedIndex;
+							myMove.oldIndex = optionalMoves[i].oldIndex;
+
+							MakeMove(myMove, clone);
+							myTurn = false;
+						}
+					}
 				}
 			}
-		}
-		else
-		{
-			uint index = clone->GetRandomRedPiece();
-			glm::ivec2 pos = clone->GetPositionFromIndex(index);
-			std::vector<Move> optionalMoves;
-
-			optionalMoves = clone->GetValidMoves(pos.x, pos.y);
-			uint someNum = rand() % 7;
-
-			for (int i = 0; i < someNum; i++)
+			else
 			{
-				if (i == someNum)
-				{
-					Move myMove;
-					myMove.X = optionalMoves[i].X;
-					myMove.Y = optionalMoves[i].Y;
-					myMove.jumpedIndex = optionalMoves[i].jumpedIndex;
-					myMove.oldIndex = optionalMoves[i].oldIndex;
+				std::cout << "PLAYER TURN" << std::endl;
+				uint index = clone->GetRandomRedPiece();
+				glm::ivec2 pos = clone->GetPositionFromIndex(index);
+				std::vector<Move> optionalMoves;
 
-					MakeMove(myMove, clone);
-					myTurn = false;
+				optionalMoves = clone->GetValidMoves(pos.x, pos.y);
+
+				if (optionalMoves.size() > 0)
+				{
+					int someNum = rand() % optionalMoves.size();
+
+					for (int i = -1; i < someNum + 1; i++)
+					{
+						if (i == someNum)
+						{
+							Move myMove;
+							myMove.X = optionalMoves[i].X;
+							myMove.Y = optionalMoves[i].Y;
+							myMove.jumpedIndex = optionalMoves[i].jumpedIndex;
+							myMove.oldIndex = optionalMoves[i].oldIndex;
+
+							MakeMove(myMove, clone);
+							myTurn = true;
+						}
+					}
 				}
 			}
+
+			if (timer <= 0)
+			{
+				clone->CountPieces();
+				if (clone->numRed < clone->numWhite)
+				{
+					score++;
+				}
+				break;
+			}
+
+			timer -= _dt;
 		}
 	}
 

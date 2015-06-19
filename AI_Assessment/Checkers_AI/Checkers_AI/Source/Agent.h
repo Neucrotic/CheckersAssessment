@@ -9,6 +9,7 @@ public:
 	~Agent(){}
 
 	void Update(double _dt);
+	void PlayTurn(double _dt);
 
 private:
 
@@ -19,5 +20,5 @@ private:
 	void MakeMove(Move _move, Board* _board);
 	bool PlayGame(Board* _board);
 
-	uint RunBranch(Move _move);
+	uint RunBranch(Move _move, double _dt);
 };

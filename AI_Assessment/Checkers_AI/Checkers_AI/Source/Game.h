@@ -3,6 +3,7 @@
 
 class InputHandler;
 class Board;
+class Agent;
 
 class Game : public App
 {
@@ -20,6 +21,7 @@ private:
 	bool playersTurn;
 
 	InputHandler* inputHandler;
+	Agent* aiAgent;
 
 	void RenderBoard(Board* _board);
 };
