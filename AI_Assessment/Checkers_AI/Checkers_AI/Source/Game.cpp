@@ -31,6 +31,8 @@ bool Game::Update(double _dt)
 {
 	m_camera->Update(_dt);
 
+	//gameBoard->GetPossibleMovesFromPos(glm::vec2(0, 2));
+
 	if (playersTurn)
 	{
 		//gameBoard->GetAllPossibleMoves();

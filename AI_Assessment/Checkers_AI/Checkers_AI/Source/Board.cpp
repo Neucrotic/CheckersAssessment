@@ -243,6 +243,11 @@ std::vector<Move> Board::GetPossibleMovesFromPos(glm::vec2 _pos)
 	int possibleSquareA = -1;
 	int possibleSquareB = -1;
 
+	if (myPiece == SquareType::EMPTY)
+	{
+		return moveList;
+	}
+
 	//if checking for a white side peice, invert the offsets
 	if (myPiece == SquareType::WHITE_PIECE || myPiece == SquareType::WHITE_KING)
 	{
@@ -250,15 +255,15 @@ std::vector<Move> Board::GetPossibleMovesFromPos(glm::vec2 _pos)
 		offset2 *= -1;
 
 		//cull left/right movements
-		if (IsIndexInColumn(leftColumn, offset1))
+		if (IsIndexInColumn(rightColumn, index))
 		{
 			possibleSquareB = index + offset2;
 		}
-		if (IsIndexInColumn(rightColumn, offset2))
+		if (IsIndexInColumn(leftColumn, index))
 		{
 			possibleSquareA = index + offset1;
 		}
-		else
+		if (!IsIndexInColumn(rightColumn, index) && !IsIndexInColumn(leftColumn, index))
 		{
 			possibleSquareA = index + offset1;
 			possibleSquareB = index + offset2;
@@ -275,7 +280,7 @@ std::vector<Move> Board::GetPossibleMovesFromPos(glm::vec2 _pos)
 		{
 			possibleSquareA = index + offset2;
 		}
-		else
+		if (!IsIndexInColumn(rightColumn, index) && !IsIndexInColumn(leftColumn, index))
 		{
 			possibleSquareA = index + offset1;
 			possibleSquareB = index + offset2;
@@ -381,6 +386,8 @@ std::vector<Move> Board::GetPossibleJumpsFromPos(glm::vec2 _pos)
 	std::vector<Move> moveList;
 	SquareType myPiece = GetPieceAt(_pos.x, _pos.y);
 	SquareType opponentsPiece = GetOpponentsType(myPiece);
+	int jumpSpacingX = 2;
+	int jumpSpacingY = 2;
 
 	//assign offsets for our piece
 	int offset1 = BOARD_LENGTH + 1;
@@ -397,8 +404,10 @@ std::vector<Move> Board::GetPossibleJumpsFromPos(glm::vec2 _pos)
 		offset1 *= -1;
 		offset2 *= -1;
 
-		glm::vec2 jumpPos1 = _pos + glm::vec2(2, -2);
-		glm::vec2 jumpPos2 = _pos + glm::vec2(-2, -2);
+		jumpSpacingY *= -1;
+
+		glm::vec2 jumpPos1 = _pos + glm::vec2(jumpSpacingX, jumpSpacingY);
+		glm::vec2 jumpPos2 = _pos + glm::vec2(-jumpSpacingX, jumpSpacingY);
 
 		//cull left/right movements
 		if (IsInBounds(jumpPos1))
@@ -417,8 +426,8 @@ std::vector<Move> Board::GetPossibleJumpsFromPos(glm::vec2 _pos)
 	}
 	else
 	{
-		glm::vec2 jumpPos1 = _pos + glm::vec2(2, 2);
-		glm::vec2 jumpPos2 = _pos + glm::vec2(-2, 2);
+		glm::vec2 jumpPos1 = _pos + glm::vec2(jumpSpacingX, jumpSpacingY);
+		glm::vec2 jumpPos2 = _pos + glm::vec2(-jumpSpacingX, jumpSpacingY);
 
 		//cull left/right movements
 		if (IsInBounds(jumpPos1))
@@ -497,15 +506,17 @@ std::vector<Move> Board::GetPossibleJumpsFromPos(glm::vec2 _pos)
 		offset1 *= -1;
 		offset2 *= -1;
 
-		glm::vec2 jumpPos1 = _pos + glm::vec2(-2, -2);
-		glm::vec2 jumpPos2 = _pos + glm::vec2(2, -2);
+		jumpSpacingY *= -1;
+
+		glm::vec2 jumpPos1 = _pos + glm::vec2(-jumpSpacingX, jumpSpacingY);
+		glm::vec2 jumpPos2 = _pos + glm::vec2(jumpSpacingX, jumpSpacingY);
 
 		//cull left/right movements
 		if (IsInBounds(jumpPos1))
 		{
 			possibleSquareA = index + offset1;
 		}
-		else if (IsInBounds(jumpPos2))
+		if (IsInBounds(jumpPos2))
 		{
 			possibleSquareB = index + offset2;
 		}
@@ -515,7 +526,7 @@ std::vector<Move> Board::GetPossibleJumpsFromPos(glm::vec2 _pos)
 			possibleSquareB = index + offset2;
 		}
 
-		if (GetPieceFromIndex(possibleSquareA) == opponentsPiece || GetPieceFromIndex(possibleSquareA) == GetOpponentsType(opponentsPiece))
+		if (GetPieceFromIndex(possibleSquareA) == opponentsPiece || GetPieceFromIndex(possibleSquareA) == GetOtherOpponentType(opponentsPiece))
 		{
 			int jumpedPiece = possibleSquareA;
 
@@ -536,7 +547,7 @@ std::vector<Move> Board::GetPossibleJumpsFromPos(glm::vec2 _pos)
 			offset1 /= 2;
 			offset2 /= 2;
 		}
-		if (GetPieceFromIndex(possibleSquareB) == opponentsPiece || GetPieceFromIndex(possibleSquareB) == GetOpponentsType(opponentsPiece))
+		if (GetPieceFromIndex(possibleSquareB) == opponentsPiece || GetPieceFromIndex(possibleSquareB) == GetOtherOpponentType(opponentsPiece))
 		{
 			int jumpedPiece = possibleSquareB;
 
