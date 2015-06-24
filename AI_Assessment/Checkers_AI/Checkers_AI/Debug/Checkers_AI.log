@@ -1,32 +1,32 @@
-﻿Build started 23/06/2015 4:14:40 PM.
+﻿Build started 24/06/2015 3:44:39 PM.
      1>Project "C:\Users\nelson.hain\Documents\CheckersAssessment\AI_Assessment\Checkers_AI\Checkers_AI\Checkers_AI.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /IC:\Users\nelson.hain\Documents\CheckersAssessment\AI_Assessment\Checkers_AI\Checkers_AI\Dep\glfw\include\ /IC:\Users\nelson.hain\Documents\CheckersAssessment\AI_Assessment\Checkers_AI\Checkers_AI\Dep\glm\ /ZI /nologo /W3 /WX- /Od /Oy- /D GLM_SWIZZLE /D GLM_FORCE_PURE /D WIN32 /D _DEBUG /D _CONSOLE /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Source\Board.cpp
          Board.cpp
-     1>c:\users\nelson.hain\documents\checkersassessment\ai_assessment\checkers_ai\checkers_ai\source\board.cpp(113): warning C4244: '=' : conversion from 'uint' to 'float', possible loss of data
-     1>c:\users\nelson.hain\documents\checkersassessment\ai_assessment\checkers_ai\checkers_ai\source\board.cpp(114): warning C4244: '=' : conversion from 'uint' to 'float', possible loss of data
-     1>c:\users\nelson.hain\documents\checkersassessment\ai_assessment\checkers_ai\checkers_ai\source\board.cpp(235): warning C4244: 'argument' : conversion from 'float' to 'uint', possible loss of data
-     1>c:\users\nelson.hain\documents\checkersassessment\ai_assessment\checkers_ai\checkers_ai\source\board.cpp(242): warning C4244: 'argument' : conversion from 'float' to 'uint', possible loss of data
-     1>c:\users\nelson.hain\documents\checkersassessment\ai_assessment\checkers_ai\checkers_ai\source\board.cpp(304): warning C4244: '=' : conversion from 'float' to 'uint32_t', possible loss of data
-     1>c:\users\nelson.hain\documents\checkersassessment\ai_assessment\checkers_ai\checkers_ai\source\board.cpp(305): warning C4244: '=' : conversion from 'float' to 'uint32_t', possible loss of data
-     1>c:\users\nelson.hain\documents\checkersassessment\ai_assessment\checkers_ai\checkers_ai\source\board.cpp(315): warning C4244: '=' : conversion from 'float' to 'uint32_t', possible loss of data
-     1>c:\users\nelson.hain\documents\checkersassessment\ai_assessment\checkers_ai\checkers_ai\source\board.cpp(316): warning C4244: '=' : conversion from 'float' to 'uint32_t', possible loss of data
-     1>c:\users\nelson.hain\documents\checkersassessment\ai_assessment\checkers_ai\checkers_ai\source\board.cpp(361): warning C4244: '=' : conversion from 'float' to 'uint32_t', possible loss of data
-     1>c:\users\nelson.hain\documents\checkersassessment\ai_assessment\checkers_ai\checkers_ai\source\board.cpp(362): warning C4244: '=' : conversion from 'float' to 'uint32_t', possible loss of data
-     1>c:\users\nelson.hain\documents\checkersassessment\ai_assessment\checkers_ai\checkers_ai\source\board.cpp(372): warning C4244: '=' : conversion from 'float' to 'uint32_t', possible loss of data
-     1>c:\users\nelson.hain\documents\checkersassessment\ai_assessment\checkers_ai\checkers_ai\source\board.cpp(373): warning C4244: '=' : conversion from 'float' to 'uint32_t', possible loss of data
-     1>c:\users\nelson.hain\documents\checkersassessment\ai_assessment\checkers_ai\checkers_ai\source\board.cpp(387): warning C4244: 'argument' : conversion from 'float' to 'uint', possible loss of data
-     1>c:\users\nelson.hain\documents\checkersassessment\ai_assessment\checkers_ai\checkers_ai\source\board.cpp(397): warning C4244: 'argument' : conversion from 'float' to 'uint', possible loss of data
-     1>c:\users\nelson.hain\documents\checkersassessment\ai_assessment\checkers_ai\checkers_ai\source\board.cpp(462): warning C4244: '=' : conversion from 'float' to 'uint32_t', possible loss of data
-     1>c:\users\nelson.hain\documents\checkersassessment\ai_assessment\checkers_ai\checkers_ai\source\board.cpp(463): warning C4244: '=' : conversion from 'float' to 'uint32_t', possible loss of data
-     1>c:\users\nelson.hain\documents\checkersassessment\ai_assessment\checkers_ai\checkers_ai\source\board.cpp(488): warning C4244: '=' : conversion from 'float' to 'uint32_t', possible loss of data
-     1>c:\users\nelson.hain\documents\checkersassessment\ai_assessment\checkers_ai\checkers_ai\source\board.cpp(489): warning C4244: '=' : conversion from 'float' to 'uint32_t', possible loss of data
-     1>c:\users\nelson.hain\documents\checkersassessment\ai_assessment\checkers_ai\checkers_ai\source\board.cpp(540): warning C4244: '=' : conversion from 'float' to 'uint32_t', possible loss of data
-     1>c:\users\nelson.hain\documents\checkersassessment\ai_assessment\checkers_ai\checkers_ai\source\board.cpp(541): warning C4244: '=' : conversion from 'float' to 'uint32_t', possible loss of data
-     1>c:\users\nelson.hain\documents\checkersassessment\ai_assessment\checkers_ai\checkers_ai\source\board.cpp(561): warning C4244: '=' : conversion from 'float' to 'uint32_t', possible loss of data
-     1>c:\users\nelson.hain\documents\checkersassessment\ai_assessment\checkers_ai\checkers_ai\source\board.cpp(562): warning C4244: '=' : conversion from 'float' to 'uint32_t', possible loss of data
-     1>c:\users\nelson.hain\documents\checkersassessment\ai_assessment\checkers_ai\checkers_ai\source\board.cpp(591): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\nelson.hain\documents\checkersassessment\ai_assessment\checkers_ai\checkers_ai\source\board.cpp(621): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\nelson.hain\documents\checkersassessment\ai_assessment\checkers_ai\checkers_ai\source\board.cpp(121): warning C4244: '=' : conversion from 'uint' to 'float', possible loss of data
+     1>c:\users\nelson.hain\documents\checkersassessment\ai_assessment\checkers_ai\checkers_ai\source\board.cpp(122): warning C4244: '=' : conversion from 'uint' to 'float', possible loss of data
+     1>c:\users\nelson.hain\documents\checkersassessment\ai_assessment\checkers_ai\checkers_ai\source\board.cpp(243): warning C4244: 'argument' : conversion from 'float' to 'uint', possible loss of data
+     1>c:\users\nelson.hain\documents\checkersassessment\ai_assessment\checkers_ai\checkers_ai\source\board.cpp(250): warning C4244: 'argument' : conversion from 'float' to 'uint', possible loss of data
+     1>c:\users\nelson.hain\documents\checkersassessment\ai_assessment\checkers_ai\checkers_ai\source\board.cpp(312): warning C4244: '=' : conversion from 'float' to 'uint32_t', possible loss of data
+     1>c:\users\nelson.hain\documents\checkersassessment\ai_assessment\checkers_ai\checkers_ai\source\board.cpp(313): warning C4244: '=' : conversion from 'float' to 'uint32_t', possible loss of data
+     1>c:\users\nelson.hain\documents\checkersassessment\ai_assessment\checkers_ai\checkers_ai\source\board.cpp(323): warning C4244: '=' : conversion from 'float' to 'uint32_t', possible loss of data
+     1>c:\users\nelson.hain\documents\checkersassessment\ai_assessment\checkers_ai\checkers_ai\source\board.cpp(324): warning C4244: '=' : conversion from 'float' to 'uint32_t', possible loss of data
+     1>c:\users\nelson.hain\documents\checkersassessment\ai_assessment\checkers_ai\checkers_ai\source\board.cpp(369): warning C4244: '=' : conversion from 'float' to 'uint32_t', possible loss of data
+     1>c:\users\nelson.hain\documents\checkersassessment\ai_assessment\checkers_ai\checkers_ai\source\board.cpp(370): warning C4244: '=' : conversion from 'float' to 'uint32_t', possible loss of data
+     1>c:\users\nelson.hain\documents\checkersassessment\ai_assessment\checkers_ai\checkers_ai\source\board.cpp(380): warning C4244: '=' : conversion from 'float' to 'uint32_t', possible loss of data
+     1>c:\users\nelson.hain\documents\checkersassessment\ai_assessment\checkers_ai\checkers_ai\source\board.cpp(381): warning C4244: '=' : conversion from 'float' to 'uint32_t', possible loss of data
+     1>c:\users\nelson.hain\documents\checkersassessment\ai_assessment\checkers_ai\checkers_ai\source\board.cpp(395): warning C4244: 'argument' : conversion from 'float' to 'uint', possible loss of data
+     1>c:\users\nelson.hain\documents\checkersassessment\ai_assessment\checkers_ai\checkers_ai\source\board.cpp(405): warning C4244: 'argument' : conversion from 'float' to 'uint', possible loss of data
+     1>c:\users\nelson.hain\documents\checkersassessment\ai_assessment\checkers_ai\checkers_ai\source\board.cpp(478): warning C4244: '=' : conversion from 'float' to 'uint32_t', possible loss of data
+     1>c:\users\nelson.hain\documents\checkersassessment\ai_assessment\checkers_ai\checkers_ai\source\board.cpp(479): warning C4244: '=' : conversion from 'float' to 'uint32_t', possible loss of data
+     1>c:\users\nelson.hain\documents\checkersassessment\ai_assessment\checkers_ai\checkers_ai\source\board.cpp(512): warning C4244: '=' : conversion from 'float' to 'uint32_t', possible loss of data
+     1>c:\users\nelson.hain\documents\checkersassessment\ai_assessment\checkers_ai\checkers_ai\source\board.cpp(513): warning C4244: '=' : conversion from 'float' to 'uint32_t', possible loss of data
+     1>c:\users\nelson.hain\documents\checkersassessment\ai_assessment\checkers_ai\checkers_ai\source\board.cpp(564): warning C4244: '=' : conversion from 'float' to 'uint32_t', possible loss of data
+     1>c:\users\nelson.hain\documents\checkersassessment\ai_assessment\checkers_ai\checkers_ai\source\board.cpp(565): warning C4244: '=' : conversion from 'float' to 'uint32_t', possible loss of data
+     1>c:\users\nelson.hain\documents\checkersassessment\ai_assessment\checkers_ai\checkers_ai\source\board.cpp(585): warning C4244: '=' : conversion from 'float' to 'uint32_t', possible loss of data
+     1>c:\users\nelson.hain\documents\checkersassessment\ai_assessment\checkers_ai\checkers_ai\source\board.cpp(586): warning C4244: '=' : conversion from 'float' to 'uint32_t', possible loss of data
+     1>c:\users\nelson.hain\documents\checkersassessment\ai_assessment\checkers_ai\checkers_ai\source\board.cpp(615): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\nelson.hain\documents\checkersassessment\ai_assessment\checkers_ai\checkers_ai\source\board.cpp(645): warning C4018: '<' : signed/unsigned mismatch
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\nelson.hain\Documents\CheckersAssessment\AI_Assessment\Checkers_AI\Checkers_AI\Debug\Checkers_AI.exe" /INCREMENTAL /NOLOGO /LIBPATH:"C:\Users\nelson.hain\Documents\CheckersAssessment\AI_Assessment\Checkers_AI\Checkers_AI\Dep\glfw\lib-vc2013\\" opengl32.lib glfw3.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\nelson.hain\Documents\CheckersAssessment\AI_Assessment\Checkers_AI\Checkers_AI\Debug\Checkers_AI.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\nelson.hain\Documents\CheckersAssessment\AI_Assessment\Checkers_AI\Checkers_AI\Debug\Checkers_AI.lib" /MACHINE:X86 Debug\Agent.obj
          Debug\App.obj
@@ -43,4 +43,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:00.59
+Time Elapsed 00:00:00.99
