@@ -62,15 +62,20 @@ bool Game::Update(double _dt)
 	if (gameBoard->numRed <= 0)
 	{
 		gameBoard->gameOver = true;
-		std::cout << "Player Wins" << std::endl;
+		std::cout << "Computer Wins" << std::endl;
 	}
 	else if (gameBoard->numWhite <= 0)
 	{
 		gameBoard->gameOver = true;
-		std::cout << "Computer Wins" << std::endl;
+		std::cout << "Player Wins" << std::endl;
 	}
 
 	gameBoard->UpgradePieces();
+
+	if (gameBoard->gameOver == true)
+	{
+		return false;
+	}
 
 	return true;
 }

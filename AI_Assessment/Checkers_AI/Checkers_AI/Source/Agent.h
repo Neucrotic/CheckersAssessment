@@ -21,4 +21,5 @@ private:
 	bool PlayGame(Board* _board);
 
 	uint RunBranch(Move _move, double _dt);
+	int GetFirstMoveScore(Board* _board);
 };

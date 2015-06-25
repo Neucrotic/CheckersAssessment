@@ -26,6 +26,14 @@ struct Move
 	uint32_t Y;
 	int jumpedIndex;
 	int oldIndex;
+
+	bool operator==(const Move& _rhs)
+	{
+		return X == _rhs.X						&&
+			   Y == _rhs.Y						&&
+			   jumpedIndex == _rhs.jumpedIndex	&&
+			   oldIndex == _rhs.oldIndex;
+	}
 };
 
 class Board
@@ -36,6 +44,8 @@ public:
 	~Board();
 
 	SquareType layout[BOARD_SIZE];
+	int offset1 = BOARD_LENGTH + 1;
+	int offset2 = BOARD_LENGTH - 1;
 
 	uint rightColumn[BOARD_LENGTH];
 	uint leftColumn[BOARD_LENGTH];
@@ -70,14 +80,21 @@ public:
 	std::vector<Move> GetPossibleMovesFromPos(glm::vec2 _pos);
 	std::vector<Move> GetPossibleJumpsFromPos(glm::vec2 _pos);
 	std::vector<Move> GetAllPossibleMoves();
+
 	std::vector<Move> GetAllPossibleWhiteMoves();
+	std::vector<Move> GetAllPossibleRedMoves();
 
 	Board* Clone();
 
 	bool IsIndexInColumn(uint* _columns, uint _index);
 	bool IsInBounds(glm::vec2 _pos);
-		//above 0 less than 8
 
 	void UpgradePieces();
 	void CountPieces();
+
+	glm::ivec2 CalculatePossibleSquaresForMoves(uint _index);
+	glm::ivec2 CalculatePossibleSquaresForJumps(uint _index, int &_xJumpSpace, int &_yJumpSpace);
+
+private:
+	std::vector<Move> GetAllPossibleMovesForColour(SquareType _pieceType, SquareType _kingType); //make sure that the pieces are of same team
 };

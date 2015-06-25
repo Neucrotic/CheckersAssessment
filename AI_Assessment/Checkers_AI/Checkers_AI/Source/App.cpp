@@ -21,7 +21,8 @@ int App::Run()
 
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		Update(deltaTime);
+		if (!Update(deltaTime))
+			break;
 
 		Gizmos::clear();
 		Render();

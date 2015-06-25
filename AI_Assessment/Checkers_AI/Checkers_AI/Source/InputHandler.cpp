@@ -1,5 +1,6 @@
 #include <typeinfo>
 #include <iostream>
+#include <algorithm>
 #include "InputHandler.h"
 
 InputHandler::InputHandler(GLFWwindow* _window, Board* _board)
@@ -129,11 +130,26 @@ void InputHandler::OnEnter()
 	{
 		selectedPiece = myBoard->GetPieceFromIndex(selector);
 
-		if (selectedPiece != SquareType::EMPTY || selectedPiece != SquareType::WHITE_KING || selectedPiece != SquareType::WHITE_PIECE)
+		if (selectedPiece != SquareType::EMPTY && selectedPiece != SquareType::WHITE_KING && selectedPiece != SquareType::WHITE_PIECE)
 		{
 			selectedPosition = myBoard->GetPositionFromIndex(selector);
 
-			myValidMoves = myBoard->GetValidMoves(selectedPosition.x, selectedPosition.y);
+			std::vector<Move> teamMoves;
+			teamMoves = myBoard->GetAllPossibleRedMoves();
+
+			std::vector<Move> validMoves;
+			validMoves = myBoard->GetValidMoves(selectedPosition.x, selectedPosition.y);
+
+			std::vector<Move>::iterator iter;
+			for (int i = 0; i < validMoves.size(); i++)
+			{
+				iter = std::find(teamMoves.begin(), teamMoves.end(), validMoves[i]);
+
+				if (iter != teamMoves.end())
+				{
+					myValidMoves.push_back(*iter);
+				}
+			}
 
 			secondEnter = true;
 			return;
@@ -192,6 +208,8 @@ void InputHandler::OnSecondEnter(SquareType _type, glm::vec2 _oldPos)
 			}
 		}
 	}
+	
+	myValidMoves.clear();
 }
 
 bool InputHandler::IsSelectorInColumn(uint* _columns)

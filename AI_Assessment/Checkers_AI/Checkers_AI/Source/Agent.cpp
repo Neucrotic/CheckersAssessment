@@ -82,6 +82,8 @@ uint Agent::RunBranch(Move _move, double _dt)
 	MakeMove(_move, clone);
 	bool myTurn = false;
 
+
+
 	for (int d = 0; d < difficulty; d++)
 	{
 		while (!clone->gameOver)
@@ -175,4 +177,31 @@ uint Agent::RunBranch(Move _move, double _dt)
 	}
 
 	return score;
+}
+
+int Agent::GetFirstMoveScore(Board* _board)
+{
+	Board* clone = _board->Clone();
+	std::vector<Move> validMoves;
+	int intialScore = 0;
+
+	validMoves = clone->GetAllPossibleWhiteMoves();
+
+	if (validMoves.size() > 0)
+	{
+		while (!clone->gameOver)
+		{
+			if (validMoves.size() > 0)
+			{
+				break;
+			}
+
+			int moveIter = rand() % validMoves.size();
+			MakeMove(validMoves[moveIter], clone);
+
+
+		}
+	}
+
+	return 0;
 }
